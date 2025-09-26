@@ -1,0 +1,15 @@
+# ninja log v5
+429	20482	7422102883950000	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/sampling.obj	711b4bc38990502f
+29	20759	7422102883950000	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/ball_query.obj	4f92683958a59c50
+395	20907	7422102884213835	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/bindings.obj	dfda7eca2e6f5e76
+399	21012	7422102884639944	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/group_points.obj	9cd5d553202fa74a
+417	21145	7422102885141220	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/interpolate.obj	64d8717a01e0867e
+213	14561	7429291386021006	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/sampling.obj	6576c4b6f306b81b
+199	14694	7429291386130222	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/group_points.obj	5e243a8e366729c5
+206	14767	7429291386175307	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/interpolate.obj	ad576325ae70cbb4
+22	14946	7429291386225646	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/ball_query.obj	f0bdf4b69a91871f
+196	15045	7429291386974852	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/bindings.obj	e81d15bbed2e3cb
+192	16603	7429291406285627	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/ball_query_gpu.obj	29079ec344587b75
+216	16671	7429291406975258	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/sampling_gpu.obj	b33435b47de1db8a
+209	16740	7429291407626295	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/interpolate_gpu.obj	d8ff9471e278e8fd
+202	16762	7429291407876754	E:/pythonma/PDN1/pointutil/build/temp.win-amd64-cpython-38/Release/_ext_src/src/group_points_gpu.obj	25af27555682fbda

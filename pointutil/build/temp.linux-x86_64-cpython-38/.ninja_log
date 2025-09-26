@@ -1,0 +1,10 @@
+# ninja log v5
+2	26160	1721746676736587540	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/interpolate_gpu.o	3b4d81bbbd525c6a
+1	26160	1721746676736587540	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/ball_query_gpu.o	dc9f36181431cb1
+1	26421	1721746676996587544	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/group_points_gpu.o	e550ed336784bfcb
+2	27514	1721746678096587561	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/sampling_gpu.o	3c5dbb3ff3827bcc
+2	34341	1721746684916587669	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/sampling.o	d69d53bf31be1c42
+1	34383	1721746684966587669	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/group_points.o	24cb9498ddac21fb
+1	34524	1721746685106587672	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/interpolate.o	ec80f948dd76205f
+0	34577	1721746685156587672	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/ball_query.o	dc8840bc8c8f7d7a
+1	41198	1721746691776587776	/home/zhuyilong/PDN1/pointutil/build/temp.linux-x86_64-cpython-38/_ext_src/src/bindings.o	6dd2fd8d3d65f847

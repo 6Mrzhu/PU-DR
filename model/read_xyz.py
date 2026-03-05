@@ -17,10 +17,10 @@ def read_xyz_file(filename):
     return atoms
 
 
-# 使用示例
 
 # atoms = read_xyz_file(filename)
 # for atom in atoms:
 #     print(f'Symbol: {atom["symbol"]}, X: {atom["x"]}, Y: {atom["y"]}, Z: {atom["z"]}')
+
 
 

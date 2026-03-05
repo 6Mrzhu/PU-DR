@@ -4,7 +4,7 @@ def nonuniform_sampling(num ,sample_num):
     sample =set()
     loc =np.random.rand()*0.8 +0.1
     while len(sample) < sample_num:
-        a =int(np.random.normal(loc=loc,scale=0.3)*num) #高斯分布的概率密度随机数
+        a =int(np.random.normal(loc=loc,scale=0.3)*num) 
         if a<0 or a>=num:
             continue
         sample.add(a)
@@ -13,7 +13,7 @@ def nonuniform_sampling(num ,sample_num):
 def rotate_point_cloud(input_data ,gt_data =None):
     #Randomly rotate the point clouds
 
-    angles =np.random.uniform(size=(3))*2*np.pi #生成大小为3的随机数
+    angles =np.random.uniform(size=(3))*2*np.pi 
     Rx =np.array([
         [1,0,0],
         [0,np.cos(angles[0]),-np.sin(angles[0])],
@@ -41,9 +41,9 @@ def rotate_point_cloud(input_data ,gt_data =None):
 
     return input_data ,gt_data
 
-#任意缩放点云
+
 def random_scale_point_cloud(input_data ,gt_data ,scale_low=0.5 ,scale_high=2):
-    scale =np.random.uniform(scale_low ,scale_high)#进行随机采样
+    scale =np.random.uniform(scale_low ,scale_high)
 
     input_data[:,:3]*=scale
     if gt_data is not None:
@@ -60,7 +60,7 @@ def jitter_perturbation_point_cloud(input_data ,sigma=0.005, clip=0.02):
     input_data+=jitter
     return input_data
 
-#对点云数据进行移动
+
 def shift_point_and_gt(input_data,gt_data=None,shift_range=0.3):
     shifts =np.random.uniform(-shift_range,shift_range ,3)
 
@@ -68,7 +68,7 @@ def shift_point_and_gt(input_data,gt_data=None,shift_range=0.3):
     if gt_data is not None:
         gt_data[:,:3] +=shifts
     return input_data,gt_data
-#对点云进行归一化操作
+
 def normalize_point_cloud(input):
     """
 
@@ -94,4 +94,5 @@ if __name__ == "__main__":
     print(input.shape)
     print("-------------------------")
     print(centroid)
+
     print(furthest)

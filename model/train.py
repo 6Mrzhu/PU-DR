@@ -26,7 +26,6 @@ sys.path.append('../')
 torch.cuda.set_device(0)
 device = 'cuda'
 from Unsampling.model6 import Upsampler,Discriminator
-##初始化神经网络的层参数
 def xavier_init(m):
     classname = m.__class__.__name__
     #print(classname)
@@ -72,7 +71,7 @@ def train(args):
     optimizer_G = Adam(G_model.parameters(), lr=params["lr_G"], betas=(0.9, 0.999),weight_decay=0.0005)
     optimizer_D = Adam(D_model.parameters(), lr=params["lr_D"], betas=(0.9, 0.999))
    # optimizer = torch.optim.Adam(G_model.parameters(), lr=params["lr_G"], weight_decay=0.005)
-    G_scheduler = MultiStepLR(optimizer_G, [40,80], gamma=0.2) #学习率进行调整，在50次和80次进行调整，计算方式0.2×0.01
+    G_scheduler = MultiStepLR(optimizer_G, [40,80], gamma=0.2) 
     D_scheduler = MultiStepLR(optimizer_D, [40,80], gamma=0.2)
     Loss_fn = Loss()
     print("preparation time is %fs" % (time.time() - start_t))
@@ -89,7 +88,7 @@ def train(args):
 
 
             repulsion_loss = Loss_fn.get_repulsion_loss(output_point_cloud.permute(0, 2, 1))
-            uniform_loss = Loss_fn.get_uniform_loss(output_point_cloud.permute(0, 2, 1)) #没使用这个损失
+            uniform_loss = Loss_fn.get_uniform_loss(output_point_cloud.permute(0, 2, 1)) 
             CD_loss = Loss_fn.get_cd_loss(output_point_cloud.permute(0, 2, 1), gt_data.permute(0, 2, 1))
             emd_loss = Loss_fn.get_emd_loss(output_point_cloud.permute(0, 2, 1), gt_data.permute(0, 2, 1))
 
@@ -117,11 +116,9 @@ def train(args):
                 total_G_loss = 10*emd_loss+repulsion_loss
             total_G_loss.backward()
             optimizer_G.step()
-            # train_step += 1
-            # print("第{}轮的第{}次训练的loss:{}".format((e + 1), train_step, total_G_loss.item()))
-       # G_scheduler.step()
-       # D_scheduler.step()
-        # 保存模型
+            
+           
+     
         # state = {'train_step': total_G_loss.item().state_dict(), 'optimizer': optimizer_G.state_dict(), 'epoch': e}
         # torch.save(state, log_dir)
             msg = "{:0>8},{}:{}, [{}/{}], {}: {},{}:{},{}: {},{}: {},{}: {},{}: {},{}:{}，{}：{}".format(
@@ -160,8 +157,9 @@ def train(args):
             D_ckpt_model_filename = "D_iter_%d.pth" % (e)
             G_model_save_path = os.path.join(model_save_dir, G_ckpt_model_filename)
             D_model_save_path = os.path.join(model_save_dir, D_ckpt_model_filename)
-            print("Moxing保存在")
+            print("Moxing")
             torch.save(G_model.module.state_dict(), G_model_save_path)
             torch.save(D_model.module.state_dict(), D_model_save_path)
 if __name__=="__main__":
+
     train(args)

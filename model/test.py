@@ -41,10 +41,10 @@ if __name__ =='__main__':
     else:
         print('路径不存在')
         print(False)
-    checkpoint =torch.load(args.resume)#加载保存下的模型
-    #load_state_dict构造好了一个模型后，可能要加载一些训练好的模型参数
+    checkpoint =torch.load(args.resume)
+    #load_state_dict
     model.load_state_dict(state_dict=checkpoint)
-    #model.eval()不启用 BatchNormalization 和 Dropout，保证BN和dropout不发生变化
+    #model.eval()
     model.eval().cuda()
    # eval_dat =PUNET_Dataset(h5_file_path='../Patches_noHole_and_collected.h5', split_dir=param['test_split'],
     #                         isTrain=False)
@@ -59,7 +59,7 @@ if __name__ =='__main__':
     save_dir =os.path.join('../outputs',exp_name)
 
     if os.path.exists(save_dir) ==False:
-        os.makedirs(save_dir)#递归创建目录
+        os.makedirs(save_dir)
 
     print("initialize")
 
@@ -77,5 +77,6 @@ if __name__ =='__main__':
           #  save_file = '../outputs/{}/{}.xyz'.format(exp_name, nam)
 
             save_xyz_file(preds,save_file)
+
 
     print("success")

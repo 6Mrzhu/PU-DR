@@ -109,18 +109,17 @@ class DenseGCN(nn.Module):
         super(DenseGCN, self).__init__()
         self.bn1 = nn.BatchNorm2d(32)
         self.n_blocks =n_blocks
-        #密集连接 每一层已做完拼接
         self.backbone = Seq(*[DenseDynBlock2d(channels + c_growth * i, c_growth, k, 1 + i, conv, act,
                                               norm, bias, stochastic, epsilon, knn)
                               for i in range(self.n_blocks - 1)])
 
         fusion_dims = int(
             (channels + channels + c_growth * (self.n_blocks - 1)) * self.n_blocks // 2)
-       # self.fusion_block = BasicConv([fusion_dims, 128], 'leakyrelu', norm, bias=False) #融合特征的
+       # self.fusion_block = BasicConv([fusion_dims, 128], 'leakyrelu', norm, bias=False)
         self.conv1 = nn.Sequential(nn.Conv2d(fusion_dims,32, kernel_size=1, bias=False),
                                    self.bn1,
                                    nn.LeakyReLU(negative_slope=0.2),
-                                   nn.Dropout(0.5))#使用1×1的卷积
+                                   nn.Dropout(0.5))
         self.knn = DilatedKnnGraph(k, 1, stochastic, epsilon)
         self.head = GraphConv2d(in_channels, channels)
     def forward(self, x, edge_index=None):
@@ -136,8 +135,8 @@ class DenseGCN(nn.Module):
          #   feat.append(p)
          #   feats =p
         feats = torch.cat(feat1, dim=1)
-        P = torch.cat(feat1, dim=1).unsqueeze(-1) #累加融合 可以尝试平均融合
-        fusion = self.conv1(P).squeeze(-1)  #特征降维
+        P = torch.cat(feat1, dim=1).unsqueeze(-1) 
+        fusion = self.conv1(P).squeeze(-1) 
         return fusion
 
 
@@ -146,7 +145,6 @@ class DenseGCN1(nn.Module):
                  act='relu',conv='edge'):
         super(DenseGCN1, self).__init__()
         self.bn1 = nn.BatchNorm2d(32)
-        #使用不扩展的的密集图卷积
         self.Dense1 =DynConv2d(channels, c_growth, k, 1, conv, act,
                                               norm, bias, stochastic, epsilon, knn)
         self.Dense2 =DynConv2d(channels+c_growth ,c_growth,k, 1, conv, act,
@@ -170,4 +168,5 @@ if __name__ == "__main__":
     generator =DenseGCN1().cuda()
     point_cloud = torch.rand(4, 3, 100).cuda()
     output = generator(point_cloud)
+
     print(output.shape)

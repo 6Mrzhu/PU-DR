@@ -26,7 +26,7 @@ def downsample_point(pts ,k):
         sampler =FarthestSamper()
         return sampler(pts,k)
     else:
-        #随机抽样np.random.choice（抽取样本数量，输出数量，replace为True可以取相同的数字）
+        
         return pts[np.random.choice(pts.shape[0],k,replace=(k<pts.shape[0])),:]
 def read_ply(file ,count=None):
     loaded =plyfile.PlyData.read(file)
@@ -77,4 +77,5 @@ def load(filename ,count =None):
                 points = tmp
             elif count < points.shape[0]:
                 points = downsample_point(points, count)
+
     return points

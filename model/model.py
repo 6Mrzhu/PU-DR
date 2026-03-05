@@ -143,7 +143,7 @@ class Upsampler(nn.Module):
     def forward(self, input):
         pos = input.permute(0, 2, 1)
         rel_pos = pos[:, :, None, :] - pos[:, None, :, :]
-        rel_pos_emb = torch.clamp(rel_pos.sum(-1), -5, 5)  # 限制输出范围，预防梯度爆炸
+        rel_pos_emb = torch.clamp(rel_pos.sum(-1), -5, 5)  
         feature = self.feature_extractor(input, rel_pos_emb)
         H = self.up_project_unit(feature, input, rel_pos_emb)
        # H = self.up_project_unit(feature)
@@ -230,4 +230,5 @@ if __name__ == "__main__":
     discriminator = Discriminator(params, in_channels=3).cuda()
     dis_output = discriminator(output)
     print(dis_output.shape)
+
     print(dis_output)

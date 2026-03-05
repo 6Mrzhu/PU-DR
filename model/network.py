@@ -70,10 +70,6 @@ class mlp_conv(nn.Module):
         return net
 def batched_index_select(values ,indices ,dim =1):
     values_dim =values.shape[(dim+1):]
-    ## 使用lambda表达式，一步实现。
-    # 冒号左边是原函数参数；
-    # 冒号右边是原函数返回值；
-    #map函数第一部分是一个函数操作，第二部分是一个可迭代的对象，可以是元组，列表，字典等
     values_shape ,indices_shape =map(lambda t:list(t.shape),(values,indices))
     indices =indices[(...,*((None,)*len(values_dim)))]
     indices =indices.expand(*((-1,) *len(indices_shape)) ,*values_dim)
@@ -103,7 +99,7 @@ def pairwise_distance(x):
     return -x_square-x_inner-x_square.transpose(2,1)
 def knn(x,k):
     idx =pairwise_distance(x) #(batchsize ,numpoint ,numpoint)
-    idx =idx.topk(k=k,dim=-1)[1] #(batchsize ,numpoint ,k)idx.topk:快速进行排序
+    idx =idx.topk(k=k,dim=-1)[1] #(batchsize ,numpoint ,k)idx.topk
     return idx
 
 
@@ -132,7 +128,7 @@ def get_graph_feature2(x, k=20, idx=None):
 def get_graph_feature(x ,k=20,idx=None):
     """construct edge feature for each point
         Args:
-            tensor: input a point cloud tensor,batch_size,num_dims,num_points   3图卷积
+            tensor: input a point cloud tensor,batch_size,num_dims,num_points   
             k: int
         Returns:
             edge features: (batch_size,num_dims,num_points,k)
@@ -187,7 +183,7 @@ def get_graph_feature_local(x ,k=20,idx=None):
 
 def knn_feature(x ,k=20,idx=None):
     """
-     基于knn对特征进行分类
+    
     :param x:
     :param k:
     :param idx:
@@ -323,7 +319,7 @@ class LocalAttention(nn.Module):
         agg = agg.permute(0, 2, 1)
         return agg
 
-#特征与相对位置进行结合，修正下采样
+
 class positate_att(nn.Module):
     def __init__(self, *, dim=128, pos_mlp_hidden_dim=64, atten_mlp=2):
         super().__init__()
@@ -521,7 +517,6 @@ class up_block11(nn.Module):
 
         net =torch.cat([net ,grid.cuda()],dim=2) #b n*4 ,130
         net =net.permute(0,2,1) #b,130,n*4
-       # net =self.atten(net) #b ，130,100  #采用的注意力机制
         net =self.rayler(net)
         net =self.conv1(net)
         net =self.conv2(net)
@@ -563,16 +558,6 @@ class DenseGCN(nn.Module):
 
         gensefeature2 = self.genseGCN2(gensefeature_2)
 
-       # gensefeature_3 = torch.cat([gensefeature2, gensefeature_2], dim=1)
-
-
-
-        # 在增加两个
-        # gensefeature3 = self.genseGCN3(gensefeature_3)
-        # gensefeature_4 = torch.cat([gensefeature3,inputs], dim=1)
-        #
-        # gensefeature4 = self.genseGCN4(gensefeature_4)
-        # gensefeature_5 = torch.cat([gensefeature4, gensefeature_4], dim=1)
 
         Reset_feature = torch.cat([gensefeature, gensefeature1, gensefeature2,inputs], dim=1)
 
@@ -602,15 +587,6 @@ class DenseGCN1(nn.Module):
         gensefeature_3 = torch.cat([gensefeature2, gensefeature_2], dim=1)
 
 
-
-
-        # gensefeature3 = self.genseGCN3(gensefeature_3)
-        # gensefeature_4 = torch.cat([gensefeature3,inputs], dim=1)
-        #
-        # gensefeature4 = self.genseGCN4(gensefeature_4)
-        # gensefeature_5 = torch.cat([gensefeature4, gensefeature_4], dim=1)
-
-        #Reset_feature = torch.cat([gensefeature, gensefeature1, gensefeature2, inputs], dim=1)
 
         return  gensefeature_3
 class down_block11(nn.Module):
@@ -653,8 +629,6 @@ class down_block11(nn.Module):
     def forward(self,feature,input,rel_pos_emb):
         net = feature  # b,128,n*4
         B, C, N =net.shape
-
-        #利用最远采样法进行近似均匀采样
         farthest=farthest_point_sample(net,int(N/self.up_ratio))
         point_cloud1 = net.reshape(B, N, C)
         downsample_points = index_points(point_cloud1, farthest).permute(0,2,1)   #b ,128,n
@@ -677,7 +651,7 @@ class down_block11(nn.Module):
         grouped_features = self.output_mlp2(grouped_features)
 
 
-        #提取全局信息
+
         global_feature =torch.cat([grouped_features,input],dim=1)
 
         global_feature =self.ra_layer(global_feature)
@@ -717,4 +691,5 @@ def exists(val):
 
 
 def max_value(t):
+
     return torch.finfo(t.dtype).max

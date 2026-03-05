@@ -16,13 +16,13 @@ from chamfer_distance.chamfer_distance import ChamferDistanceFunction as chamfer
 from train_option import get_train_options
 from loss import Loss
 parser = argparse.ArgumentParser()
-parser.add_argument("--pred", type=str, required=False, default="../outputs/exp", help=".xyz")  # 输出数据所在位置
+parser.add_argument("--pred", type=str, required=False, default="../outputs/exp", help=".xyz")  
 #parser.add_argument("--gt", type=str, required=False, default="../Unsampling/gt", help=".xyz")
 #parser.add_argument("--gt", type=str, required=False, default="../Unsampling/gt_4096", help=".xyz")
 parser.add_argument("--gt", type=str, required=False, default="../Unsampling/gt_8192", help=".xyz")
 FLAGS = parser.parse_args()
-PRED_DIR = os.path.abspath(FLAGS.pred)  # 得到测试数据文件绝对路径
-GT_DIR = os.path.abspath(FLAGS.gt)  # 拿到真实数据的绝对路径
+PRED_DIR = os.path.abspath(FLAGS.pred) 
+GT_DIR = os.path.abspath(FLAGS.gt) 
 chamfer_distance1 = chamfer_3DDist.apply
 
 
@@ -34,10 +34,10 @@ pred_paths = glob(os.path.join(PRED_DIR, '*xyz'))
 
 # print(gt_paths)
 # print(pred_paths)
-gt_names = [os.path.basename(p)[:-4] for p in gt_paths]  # os.path.basename(p)返回路径名中最后一个组成部分
+gt_names = [os.path.basename(p)[:-4] for p in gt_paths]  # os.path.basename(p)
 pred_names = [os.path.basename(p)[:-4] for p in gt_paths]
 # gt = gt_paths[0]
-# gt = load(gt_paths[0])[:, :3]  # 只取第一个数据评估
+# gt = load(gt_paths[0])[:, :3]  
 # pred = load(pred_paths[0])[:, :3]
 #
 # pred_tensor, centroid, furthest_distance = normalize_point_cloud(gt)
@@ -58,10 +58,10 @@ def nearest_distance(queries, pc, k=2):
 # 均匀度分析
 def analyse_uniform(idx_file, radius_file, map_points_file):
     start_time = time()
-    points = load(map_points_file)  # 球查询，以每个种子点为中心，r为半径的查询子集
+    points = load(map_points_file) 
     radius = np.loadtxt(radius_file)
     with open(idx_file) as f:
-        lines = f.readlines()  # 读取txt文件的每一行
+        lines = f.readlines()  
 
     sample_number = 1000
     rad_number = radius.shape[0]
@@ -92,10 +92,10 @@ def analyse_uniform(idx_file, radius_file, map_points_file):
 
             shortest_dis = nearest_distance(map_point, map_point, k=2)
             disk_area = math.pi * (radius[j] ** 2) / map_point.shape[0]
-            expect_d = math.sqrt(2 * disk_area / 1.732)  # using hexagon 使用六边形
+            expect_d = math.sqrt(2 * disk_area / 1.732)  # using hexagon 
 
             dis = np.square(shortest_dis - expect_d) / expect_d
-            dis_mean = np.mean(dis)  # 采用一个平均值
+            dis_mean = np.mean(dis)  
             uniform_dis.append(coverage * dis_mean)
 
         uniform_dis = np.array(uniform_dis).astype(np.float32)
@@ -137,14 +137,14 @@ for D in [PRED_DIR]:
 
     with open(os.path.join(os.path.dirname(gt_pred_pairs[0][1]), "evaluation.csv"), "w") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, restval="-", extrasaction="ignore")
-        writer.writeheader()  # 只使用预先指定的字段名写入csv文件的第一行
+        writer.writeheader()
         cd_forward_value_list=[]
         cd_backward_value_list=[]
         hd_value_list =[]
         row = {}
         for gt_path, pred_path in gt_pred_pairs:
             gt = load(gt_path)[:, :3]
-            gt = gt[np.newaxis, ...]  # np.newaxis增加一个维度，行增加一个维度 ,为了求CD距离
+            gt = gt[np.newaxis, ...]  # np.newaxis
             pred = load(pred_path)
             pred = pred[:, :3]
 
@@ -224,4 +224,5 @@ for D in [PRED_DIR]:
 
         writer.writerow(row)
 print("scessful")
+
 
